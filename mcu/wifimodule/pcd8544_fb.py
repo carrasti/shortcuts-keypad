@@ -69,25 +69,18 @@ WIDTH            = const(0x54) # 84
 HEIGHT           = const(0x30) # 48
 
 class PCD8544_FB(framebuf.FrameBuffer):
-	def __init__(self, spi, cs, dc, rst=None):
+	def __init__(self, spi, dc):
 		self.spi    = spi
-		self.cs     = cs   # chip enable, active LOW
 		self.dc     = dc   # data HIGH, command LOW
-		self.rst    = rst  # reset, active LOW
 
 		self.height = HEIGHT  # For Writer class
 		self.width = WIDTH
 
-		self.cs.init(self.cs.OUT, value=1)
 		self.dc.init(self.dc.OUT, value=0)
-
-		if self.rst:
-			self.rst.init(self.rst.OUT, value=1)
 
 		self.buf = bytearray((HEIGHT // 8) * WIDTH)
 		super().__init__(self.buf, WIDTH, HEIGHT, framebuf.MONO_VLSB)
 
-		self.reset()
 		self.init()
 
 	def init(self, horizontal=True, contrast=0x3f, bias=BIAS_1_40, temp=TEMP_COEFF_2):
@@ -98,18 +91,7 @@ class PCD8544_FB(framebuf.FrameBuffer):
 		self.cmd(DISPLAY_NORMAL)
 		self.clear()
 
-	def reset(self):
-		# issue reset impulse to reset the display
-		# you need to call power_on() or init() to resume
-		self.rst(1)
-		sleep_us(100)
-		self.rst(0)
-		sleep_us(100) # reset impulse has to be >100 ns and <100 ms
-		self.rst(1)
-		sleep_us(100)
-
 	def power_on(self):
-		self.cs(1)
 		self.fn &= ~POWER_DOWN
 		self.cmd(self.fn)
 
@@ -156,15 +138,11 @@ class PCD8544_FB(framebuf.FrameBuffer):
 
 	def cmd(self, command):
 		self.dc(0)
-		self.cs(0)
 		self.spi.write(bytearray([command]))
-		self.cs(1)
 
 	def data(self, data):
 		self.dc(1)
-		self.cs(0)
 		self.spi.write(pack('B'*len(data), *data))
-		self.cs(1)
 
 	def show(self):
 		self.data(self.buf)
