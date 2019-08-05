@@ -1,0 +1,10 @@
+[
+    {
+        "ssid": "Home Network",
+        "password": "SecretPassword"
+    },
+    {
+        "ssid": "Work Network",
+        "password": "SecretPassword"
+    }
+]
