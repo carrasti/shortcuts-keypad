@@ -53,9 +53,9 @@ class UartComm():
             return False
         
         uartdata = self._uart.read()
-        display.lcd.fill(0)
-        display.lcd.text(uartdata[3:], 0, 0, 1)
-        display.lcd.show()
+        #display.lcd.fill(0)
+        #display.lcd.text(uartdata[3:], 0, 0, 1)
+        #display.lcd.show()
         r = len(uartdata)
         while True:
             position = uartdata.rfind(INSTRUCTION, 0, r)

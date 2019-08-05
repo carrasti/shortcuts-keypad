@@ -65,7 +65,7 @@ class NetControl(object):
             any(fn(self) for fn in self._disconnect_callbacks)
             self._last_is_connected = False
 
-    def connect(self, ssid, password, timeout=5):
+    def connect(self, ssid, password, timeout=10):
         if not self._interface.active():
             self._interface.active(True)
 
