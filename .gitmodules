@@ -1,0 +1,6 @@
+[submodule "mcu/inputmodule/Rotary"]
+	path = mcu/inputmodule/Rotary
+	url = https://github.com/brianlow/Rotary
+[submodule "mcu/inputmodule/Adafruit-Pro-Trinket-USB-HID"]
+	path = mcu/inputmodule/Adafruit-Pro-Trinket-USB-HID
+	url = https://github.com/adafruit/Pro-Trinket-Rotary-Encoder.git
