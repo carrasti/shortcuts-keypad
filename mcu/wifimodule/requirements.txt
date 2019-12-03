@@ -6,7 +6,7 @@
 #
 adafruit-ampy==1.0.7
 click==7.0                # via adafruit-ampy
-ecdsa==0.13.2             # via esptool
+ecdsa==0.13.3             # via esptool
 esptool==2.6
 pillow==6.0.0
 pyaes==1.6.1              # via esptool
